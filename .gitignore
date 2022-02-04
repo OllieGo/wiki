@@ -1,4 +1,4 @@
-README.md
+
 target/
 .mvn/
 !**/src/main/**/target/
