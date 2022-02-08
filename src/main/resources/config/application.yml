@@ -1,0 +1,6 @@
+server:
+  port: 8880
+
+
+test:
+  hello: Hello

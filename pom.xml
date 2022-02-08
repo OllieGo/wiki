@@ -14,7 +14,8 @@
     <name>wiki</name>
     <description>Wiki</description>
     <properties>
-        <java.version>8</java.version>
+        <java.version>1.8</java.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
     </properties>
     <dependencies>
         <dependency>
@@ -27,6 +28,28 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
