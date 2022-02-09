@@ -8,7 +8,7 @@ test:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/wiki?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: root
+    username: wiki
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
