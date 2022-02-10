@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olliego.wiki.dao.EbookMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.olliego.wiki.model.Ebook">
+        <id column="id" property="id" />
+        <result column="create_people" property="createPeople" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_people" property="modifyPeople" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="deleted" property="deleted" />
+        <result column="name" property="name" />
+        <result column="category_one_id" property="categoryOneId" />
+        <result column="category_two_id" property="categoryTwoId" />
+        <result column="description" property="description" />
+        <result column="cover" property="cover" />
+        <result column="doc_count" property="docCount" />
+        <result column="view_count" property="viewCount" />
+        <result column="vote_count" property="voteCount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, create_people, create_time, modify_people, modify_time, deleted, name, category_one_id, category_two_id, description, cover, doc_count, view_count, vote_count
+    </sql>
+
+</mapper>

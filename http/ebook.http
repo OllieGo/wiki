@@ -1,0 +1,7 @@
+GET http://localhost:8880/ebook/list
+Accept: application/json
+
+###
+
+
+

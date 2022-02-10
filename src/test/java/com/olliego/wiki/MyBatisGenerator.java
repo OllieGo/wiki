@@ -30,7 +30,7 @@ public class MyBatisGenerator {
     //作者名
     private final String author = "admin";
     //指定生成的表名
-    private final String[] tableNames = new String[]{"test"};
+    private final String[] tableNames = new String[]{"ebook"};
 
     //输出的目录
     public static final String OUT_DIR = "/src/main/java/";
@@ -50,7 +50,7 @@ public class MyBatisGenerator {
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
         //配置数据源
         DataSourceConfig dataSourceConfig = getDataSourceConfig();
-        // 策略配置
+        //策略配置
         StrategyConfig strategyConfig = getStrategyConfig(tableNames);
         //全局变量配置
         GlobalConfig globalConfig = getGlobalConfig(serviceNameStartWithI);
@@ -86,8 +86,8 @@ public class MyBatisGenerator {
     private PackageConfig getPackageConfig(String packageName) {
         return new PackageConfig()
                 .setParent(packageName)
-                .setXml("mapper.xml")
-                .setMapper("mapper")
+                .setXml("dao.xml")
+                .setMapper("dao")
                 .setController("controller")
                 //.setEntity("entity");
                 .setEntity("model");
