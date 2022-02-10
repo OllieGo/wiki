@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 
 @ComponentScan("com.olliego")
 @SpringBootApplication
-@MapperScan("com.olliego.wiki.mapper")
+@MapperScan("com.olliego.wiki.dao")
 public class WikiApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(WikiApplication.class);
