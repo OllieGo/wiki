@@ -28,7 +28,7 @@ public class MyBatisGenerator {
     private final String packageName = "com.olliego.wiki";
 
     //作者名
-    private final String author = "admin";
+    private final String author = "olliego";
     //指定生成的表名
     private final String[] tableNames = new String[]{"ebook"};
 
@@ -116,7 +116,7 @@ public class MyBatisGenerator {
                 .setFileOverride(true);
         if (!serviceNameStartWithI) {
             //设置service名
-            globalConfig.setServiceName("%sService");
+            globalConfig.setServiceName("I%sService");
         }
         return globalConfig;
     }
