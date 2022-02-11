@@ -1,7 +1,10 @@
-GET http://localhost:8880/ebook/list
+POST http://localhost:8880/ebook/list
 Accept: application/json
 
 ###
 
 
+POST http://localhost:8880/ebook/list?name
+Accept: application/json
 
+###

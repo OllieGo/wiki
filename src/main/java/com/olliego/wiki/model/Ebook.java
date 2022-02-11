@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 电子书
  * </p>
  *
- * @author admin
+ * @author olliego
  * @since 2022-02-10
  */
 public class Ebook implements Serializable {

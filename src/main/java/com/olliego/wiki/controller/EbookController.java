@@ -2,12 +2,14 @@ package com.olliego.wiki.controller;
 
 
 import com.olliego.wiki.model.Ebook;
-import com.olliego.wiki.resp.CommonResp;
-import com.olliego.wiki.service.EbookService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.olliego.wiki.param.EbookSearchParam;
+import com.olliego.wiki.resp.RestResult;
+import com.olliego.wiki.result.EbookVO;
+import com.olliego.wiki.service.base.inter.IEbookService;
+import com.olliego.wiki.service.extend.inter.EbookExtendService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,21 +19,21 @@ import java.util.List;
  * 电子书 前端控制器
  * </p>
  *
- * @author admin
+ * @author olliego
  * @since 2022-02-10
  */
 @RestController
 @RequestMapping("/ebook")
+@Api(tags = "电子书管理")
 public class EbookController {
 
     @Resource
-    private EbookService ebookService;
+    private EbookExtendService ebookExtendService;
 
-    @GetMapping("/list")
-    public CommonResp list() {
-        CommonResp<List<Ebook>> resp = new CommonResp<>();
-        List<Ebook> list = ebookService.list();
-        resp.setData(list);
-        return resp;
+    @ApiOperation(value = "电子书列表")
+    @PostMapping("/list")
+    public RestResult<List<EbookVO>> list(@RequestBody EbookSearchParam param) {
+        RestResult<List<EbookVO>> result = ebookExtendService.queryList(param);
+        return result;
     }
 }
