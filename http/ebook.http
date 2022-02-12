@@ -4,7 +4,16 @@ Accept: application/json
 ###
 
 
-POST http://localhost:8880/ebook/list?name
+
+POST http://localhost:8880/ebook/list
 Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "name":"mysql"
+}
 
 ###
+
+
