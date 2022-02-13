@@ -46,25 +46,42 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      Content
+      <pre>
+        {{ ebooks }}
+      </pre>
     </a-layout-content>
   </a-layout>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import {defineComponent, onMounted, ref, reactive, toRef} from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'Home',
   setup() {
     console.log("setup");
-    axios.post("http://localhost:8880/ebook/list", {
-      name: "mysql"
-    }).then((response) => {
-      console.log(response);
-    })
-  },
+    const ebooks = ref();
+    const ebooks2 = reactive({books: []});
+
+    onMounted(() => {
+      console.log("onMounted");
+      axios.post("http://localhost:8880/ebook/list", {
+        name: "mysql"
+      }).then((response) => {
+        const data = response.data;
+
+        ebooks.value = data.data;
+        ebooks2.books = data.data;
+        console.log(response);
+      });
+    });
+
+    return {
+      ebooks,
+      books: toRef(ebooks2, "books")
+    }
+  }
 });
 
 
