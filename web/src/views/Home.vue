@@ -46,37 +46,23 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
-        <template #footer>
-          <div>
-            <b>ant design vue</b>
-            footer part
-          </div>
-        </template>
+      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
         <template #renderItem="{ item }">
-          <a-list-item key="item.title">
+          <a-list-item key="item.name">
             <template #actions>
           <span v-for="{ type, text } in actions" :key="type">
             <component v-bind:is="type" style="margin-right: 8px"/>
             {{ text }}
           </span>
             </template>
-            <template #extra>
-              <img
-                  width="272"
-                  alt="logo"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-              />
-            </template>
             <a-list-item-meta :description="item.description">
               <template #title>
-                <a :href="item.href">{{ item.title }}</a>
+                <a :href="item.href">{{ item.name }}</a>
               </template>
               <template #avatar>
-                <a-avatar :src="item.avatar"/>
+                <a-avatar :src="item.cover"/>
               </template>
             </a-list-item-meta>
-            {{ item.content }}
           </a-list-item>
         </template>
       </a-list>
@@ -85,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, reactive, toRef} from 'vue';
+import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
 
 const listData: any = [];
@@ -107,31 +93,22 @@ export default defineComponent({
   setup() {
     console.log("setup");
     const ebooks = ref();
-    const ebooks2 = reactive({books: []});
 
     onMounted(() => {
       console.log("onMounted");
       axios.post("http://localhost:8880/ebook/list", {
-        name: "mysql"
+        name: ""
       }).then((response) => {
         const data = response.data;
 
         ebooks.value = data.data;
-        ebooks2.books = data.data;
         console.log(response);
       });
     });
 
     return {
       ebooks,
-      books: toRef(ebooks2, "books"),
       listData,
-      pagination: {
-        onChange: (page: any) => {
-          console.log(page);
-        },
-        pageSize: 3,
-      },
       actions: [
         {type: 'StarOutlined', text: '156'},
         {type: 'LikeOutlined', text: '156'},
