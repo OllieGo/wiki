@@ -96,7 +96,7 @@ export default defineComponent({
 
     onMounted(() => {
       console.log("onMounted");
-      axios.post("http://localhost:8880/ebook/list", {
+      axios.post("/ebook/list", {
         name: ""
       }).then((response) => {
         const data = response.data;
