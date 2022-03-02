@@ -3,7 +3,9 @@ package com.olliego.wiki.service.extend.inter;
 import com.olliego.wiki.param.EbookSearchParam;
 import com.olliego.wiki.resp.RestResult;
 import com.olliego.wiki.result.EbookVO;
-import java.util.List;
+import com.olliego.wiki.result.PageVO;
+
+
 
 /**
  * <p>
@@ -16,10 +18,10 @@ import java.util.List;
 public interface EbookExtendService {
 
     /**
-     * 电子书列表接口
+     * 电子书分页
      * @param param
      * @return
      */
-    RestResult<List<EbookVO>> queryList(EbookSearchParam param);
+    RestResult<PageVO<EbookVO>> queryPage(EbookSearchParam param);
 
 }

@@ -1,16 +1,23 @@
 package com.olliego.wiki.service.extend.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.model.Ebook;
 import com.olliego.wiki.param.EbookSearchParam;
 import com.olliego.wiki.resp.RestResult;
 import com.olliego.wiki.result.EbookVO;
+import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.service.base.inter.IEbookService;
 import com.olliego.wiki.service.extend.inter.EbookExtendService;
 import com.olliego.wiki.utils.CopyUtil;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +35,21 @@ public class EbookExtendServiceImpl implements EbookExtendService {
     private IEbookService iEbookService;
 
     @Override
-    public RestResult<List<EbookVO>> queryList(EbookSearchParam param) {
-        List<Ebook> ebookList = iEbookService.listNoPage(param);
-        List<EbookVO> ebookVOList = CopyUtil.copyList(ebookList, EbookVO.class);
-        return RestResult.wrapSuccessResponse(ebookVOList);
+    public RestResult<PageVO<EbookVO>> queryPage(EbookSearchParam param) {
+        LambdaQueryWrapper<Ebook> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(param.getName()), Ebook::getName, param.getName());
+        queryWrapper.orderByDesc(Ebook::getId);
+        IPage<Ebook> page = iEbookService.page(new Page<>(param.getPageNum(), param.getPageSize()), queryWrapper);
+
+        List<Ebook> ebookList = page.getRecords();
+        if (CollectionUtils.isEmpty(ebookList)) {
+            return RestResult.wrapSuccessResponse(new PageVO<>(new ArrayList<>(), 0L, 0,
+                    param.getPageNum(), param.getPageSize()));
+        }
+
+        List<EbookVO> ebookVOS = CopyUtil.copyList(ebookList, EbookVO.class);
+        PageVO<EbookVO> pageVO = new PageVO<>(ebookVOS, page.getTotal(), (int) page.getPages()
+                , (int) page.getCurrent(), (int) page.getSize());
+        return RestResult.wrapSuccessResponse(pageVO);
     }
 }

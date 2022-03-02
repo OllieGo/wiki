@@ -5,6 +5,7 @@ import com.olliego.wiki.model.Ebook;
 import com.olliego.wiki.param.EbookSearchParam;
 import com.olliego.wiki.resp.RestResult;
 import com.olliego.wiki.result.EbookVO;
+import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.service.base.inter.IEbookService;
 import com.olliego.wiki.service.extend.inter.EbookExtendService;
 import io.swagger.annotations.Api;
@@ -31,9 +32,8 @@ public class EbookController {
     private EbookExtendService ebookExtendService;
 
     @ApiOperation(value = "电子书列表")
-    @PostMapping("/list")
-    public RestResult<List<EbookVO>> list(@RequestBody EbookSearchParam param) {
-        RestResult<List<EbookVO>> result = ebookExtendService.queryList(param);
-        return result;
+    @PostMapping("/page")
+    public RestResult<PageVO<EbookVO>> page(@RequestBody EbookSearchParam param) {
+        return ebookExtendService.queryPage(param);
     }
 }
