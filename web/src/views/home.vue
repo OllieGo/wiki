@@ -74,7 +74,7 @@
 import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
 
-const listData: any = [];
+/*const listData: any = [];
 
 for (let i = 0; i < 23; i++) {
   listData.push({
@@ -86,7 +86,7 @@ for (let i = 0; i < 23; i++) {
     content:
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   });
-}
+}*/
 
 export default defineComponent({
   name: 'Home',
@@ -94,17 +94,24 @@ export default defineComponent({
     const ebooks = ref();
 
     onMounted(() => {
-      axios.post("/ebook/list", {
-        name: ""
+      axios.post("/ebook/page", {
+        name: "",
+        pageNum: 1,
+        pageSize: 100
       }).then((response) => {
         const data = response.data;
-        ebooks.value = data.data;
+        ebooks.value = data.data.list;
       });
     });
 
     return {
       ebooks,
-      listData,
+      //listData,
+      pagination: {
+        onChange: (page: any) => {
+          console.log(page);
+        }
+      },
       actions: [
         {type: 'StarOutlined', text: '156'},
         {type: 'LikeOutlined', text: '156'},

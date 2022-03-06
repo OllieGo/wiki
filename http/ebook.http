@@ -5,13 +5,15 @@ Accept: application/json
 
 
 
-POST http://localhost:8880/ebook/list
+POST http://localhost:8880/ebook/page
 Accept: application/json
 Cache-Control: no-cache
 Content-Type: application/json
 
 {
-  "name":"mysql"
+  "name": "mysql",
+  "pageNum": 1,
+  "pageSize": 10
 }
 
 ###
