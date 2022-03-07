@@ -33,9 +33,9 @@
                 cancel-text="否"
                 @confirm="handleDelete(record.id)"
             >-->
-              <a-button type="danger">
-                删除
-              </a-button>
+            <a-button type="danger">
+              删除
+            </a-button>
             <!--</a-popconfirm>-->
           </a-space>
         </template>
@@ -44,27 +44,27 @@
   </a-layout>
 
   <a-modal
-          title="电子书表单"
-          v-model:visible="modalVisible"
-          :confirm-loading="modalLoading"
-          @ok="handleModalOk"
+      title="电子书表单"
+      v-model:visible="modalVisible"
+      :confirm-loading="modalLoading"
+      @ok="handleModalOk"
   >
     <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="封面">
-        <a-input v-model:value="ebook.cover" />
+        <a-input v-model:value="ebook.cover"/>
       </a-form-item>
       <a-form-item label="名称">
-        <a-input v-model:value="ebook.name" />
+        <a-input v-model:value="ebook.name"/>
       </a-form-item>
       <a-form-item label="名称">
-        <a-input v-model:value="ebook.name" />
+        <a-input v-model:value="ebook.name"/>
       </a-form-item>
       <a-form-item label="分类一">
-        <a-input v-model:value="ebook.category1Id" />
+        <a-input v-model:value="ebook.category1Id"/>
       </a-form-item>
-      <!--<a-form-item label="分类二>
-        <a-input v-model:value="ebook.category2Id" />
-      </a-form-item>-->
+      <a-form-item label="分类二">
+        <a-input v-model:value="ebook.category2Id"/>
+      </a-form-item>
       <!--<a-form-item label="分类">
         <a-cascader
                 v-model:value="categoryIds"
@@ -73,7 +73,7 @@
         />
       </a-form-item>-->
       <a-form-item label="描述">
-        <a-input v-model:value="ebook.description" type="textarea" />
+        <a-input v-model:value="ebook.description" type="textarea"/>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -174,8 +174,8 @@ export default defineComponent({
     };
 
     // -------- 表单 ---------
-      const categoryIds = ref();
-      const ebook = ref();
+    const categoryIds = ref();
+    const ebook = ref();
     const modalVisible = ref(false);
     const modalLoading = ref(false);
     const handleModalOk = () => {
@@ -208,8 +208,9 @@ export default defineComponent({
       categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
     };*/
 
-    const edit = () => {
+    const edit = (record: any) => {
       modalVisible.value = true;
+      ebook.value = record;
     };
 
     onMounted(() => {
@@ -229,6 +230,7 @@ export default defineComponent({
 
       edit,
 
+      ebook,
       modalVisible,
       modalLoading,
       handleModalOk
