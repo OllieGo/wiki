@@ -24,8 +24,7 @@
                 文档管理
               </a-button>
             </router-link>-->
-            <!--<a-button type="primary" @click="edit(record)">-->
-            <a-button type="primary" @click="edit">
+            <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
             <!--<a-popconfirm
@@ -50,8 +49,33 @@
           :confirm-loading="modalLoading"
           @ok="handleModalOk"
   >
-    <!--<p>{{ modalText }}</p>-->
-    <p>test</p>
+    <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form-item label="封面">
+        <a-input v-model:value="ebook.cover" />
+      </a-form-item>
+      <a-form-item label="名称">
+        <a-input v-model:value="ebook.name" />
+      </a-form-item>
+      <a-form-item label="名称">
+        <a-input v-model:value="ebook.name" />
+      </a-form-item>
+      <a-form-item label="分类一">
+        <a-input v-model:value="ebook.category1Id" />
+      </a-form-item>
+      <!--<a-form-item label="分类二>
+        <a-input v-model:value="ebook.category2Id" />
+      </a-form-item>-->
+      <!--<a-form-item label="分类">
+        <a-cascader
+                v-model:value="categoryIds"
+                :field-names="{ label: 'name', value: 'id', children: 'children' }"
+                :options="level1"
+        />
+      </a-form-item>-->
+      <a-form-item label="描述">
+        <a-input v-model:value="ebook.description" type="textarea" />
+      </a-form-item>
+    </a-form>
   </a-modal>
 </template>
 
