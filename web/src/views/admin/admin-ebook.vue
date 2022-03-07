@@ -14,37 +14,45 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar"/>
         </template>
-        <template v-slot:category="{ text, record }">
+        <!--<template v-slot:category="{ text, record }">
           <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
-        </template>
+        </template>-->
         <template v-slot:action="{ text, record }">
           <a-space size="small">
-            <router-link :to="'/admin/doc?ebookId=' + record.id">
+            <!--<router-link :to="'/admin/doc?ebookId=' + record.id">
               <a-button type="primary">
                 文档管理
               </a-button>
-            </router-link>
-            <a-button type="primary" @click="edit(record)">
+            </router-link>-->
+            <!--<a-button type="primary" @click="edit(record)">-->
+            <a-button type="primary" @click="edit">
               编辑
             </a-button>
-            <a-popconfirm
+            <!--<a-popconfirm
                 title="删除后不可恢复，确认删除?"
                 ok-text="是"
                 cancel-text="否"
                 @confirm="handleDelete(record.id)"
-            >
+            >-->
               <a-button type="danger">
                 删除
               </a-button>
-            </a-popconfirm>
+            <!--</a-popconfirm>-->
           </a-space>
         </template>
       </a-table>
-      <div class="about">
-        <h1>电子书管理</h1>
-      </div>
     </a-layout-content>
   </a-layout>
+
+  <a-modal
+          title="电子书表单"
+          v-model:visible="modalVisible"
+          :confirm-loading="modalLoading"
+          @ok="handleModalOk"
+  >
+    <!--<p>{{ modalText }}</p>-->
+    <p>test</p>
+  </a-modal>
 </template>
 
 <script lang="ts">
@@ -141,6 +149,45 @@ export default defineComponent({
       });
     };
 
+    // -------- 表单 ---------
+      const categoryIds = ref();
+      const ebook = ref();
+    const modalVisible = ref(false);
+    const modalLoading = ref(false);
+    const handleModalOk = () => {
+      modalLoading.value = true;
+      ebook.value.category1Id = categoryIds.value[0];
+      ebook.value.category2Id = categoryIds.value[1];
+      axios.post("/ebook/save", ebook.value).then((response) => {
+        modalLoading.value = false;
+        const data = response.data; // data = commonResp
+        if (data.success) {
+          modalVisible.value = false;
+
+          // 重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.message);
+        }
+      });
+    };
+
+    /**
+     * 编辑
+     */
+    /*const edit = (record: any) => {
+      modalVisible.value = true;
+      ebook.value = Tool.copy(record);
+      categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
+    };*/
+
+    const edit = () => {
+      modalVisible.value = true;
+    };
+
     onMounted(() => {
       handleQuery({
         pageNum: 1,
@@ -154,7 +201,13 @@ export default defineComponent({
       pagination,
       columns,
       loading,
-      handleTableChange
+      handleTableChange,
+
+      edit,
+
+      modalVisible,
+      modalLoading,
+      handleModalOk
     }
   }
 });

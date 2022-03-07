@@ -12,6 +12,7 @@ import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.service.base.inter.IEbookService;
 import com.olliego.wiki.service.extend.inter.EbookExtendService;
 import com.olliego.wiki.utils.CopyUtil;
+import com.olliego.wiki.utils.ObjectCopyUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class EbookExtendServiceImpl implements EbookExtendService {
                     param.getPageNum(), param.getPageSize()));
         }
 
-        List<EbookVO> ebookVOS = CopyUtil.copyList(ebookList, EbookVO.class);
+        List<EbookVO> ebookVOS = ObjectCopyUtil.beanList2BeanList(ebookList, EbookVO.class);
         PageVO<EbookVO> pageVO = new PageVO<>(ebookVOS, page.getTotal(), (int) page.getPages()
                 , (int) page.getCurrent(), (int) page.getSize());
         return RestResult.wrapSuccessResponse(pageVO);
