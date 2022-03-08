@@ -2,8 +2,7 @@ package com.olliego.wiki.service.base.inter;
 
 import com.olliego.wiki.model.Ebook;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.olliego.wiki.param.EbookSearchParam;
-import com.olliego.wiki.resp.RestResult;
+import com.olliego.wiki.param.ebook.EbookSearchParam;
 
 import java.util.List;
 

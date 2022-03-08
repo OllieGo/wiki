@@ -1,4 +1,4 @@
-package com.olliego.wiki.param;
+package com.olliego.wiki.param.ebook;
 import com.olliego.wiki.param.base.RestPageParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.model.Ebook;
-import com.olliego.wiki.param.EbookSearchParam;
+import com.olliego.wiki.param.ebook.EbookSaveParam;
+import com.olliego.wiki.param.ebook.EbookSearchParam;
 import com.olliego.wiki.resp.RestResult;
 import com.olliego.wiki.result.EbookVO;
 import com.olliego.wiki.result.PageVO;
@@ -16,6 +17,7 @@ import com.olliego.wiki.utils.ObjectCopyUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -48,9 +50,23 @@ public class EbookExtendServiceImpl implements EbookExtendService {
                     param.getPageNum(), param.getPageSize()));
         }
 
-        List<EbookVO> ebookVOS = ObjectCopyUtil.beanList2BeanList(ebookList, EbookVO.class);
+        List<EbookVO> ebookVOS = CopyUtil.copyList(ebookList, EbookVO.class);
         PageVO<EbookVO> pageVO = new PageVO<>(ebookVOS, page.getTotal(), (int) page.getPages()
                 , (int) page.getCurrent(), (int) page.getSize());
         return RestResult.wrapSuccessResponse(pageVO);
+    }
+
+    @Override
+    public RestResult save(EbookSaveParam param) {
+        Ebook ebook = CopyUtil.copy(param, Ebook.class);
+        if (ObjectUtils.isEmpty(param.getId())) {
+            //新增
+            iEbookService.save(ebook);
+        } else {
+            //更新
+            iEbookService.updateById(ebook);
+        }
+
+        return RestResult.wrapSuccessResponse();
     }
 }
