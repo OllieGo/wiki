@@ -56,9 +56,6 @@
             <a-form-item label="名称">
                 <a-input v-model:value="ebook.name"/>
             </a-form-item>
-            <a-form-item label="名称">
-                <a-input v-model:value="ebook.name"/>
-            </a-form-item>
             <a-form-item label="分类一">
                 <a-input v-model:value="ebook.categoryOneId"/>
             </a-form-item>
@@ -108,8 +105,14 @@
                     dataIndex: 'name'
                 },
                 {
-                    title: '分类',
-                    slots: {customRender: 'category'}
+                    title: '分类一',
+                    dataIndex: 'categoryOneId'
+                    //slots: {customRender: 'categoryOneId'}
+                },
+                {
+                    title: '分类二',
+                    dataIndex: 'categoryTwoId'
+                    //slots: {customRender: 'categoryTwoId'}
                 },
                 {
                     title: '文档数',
@@ -174,24 +177,24 @@
             };
 
             // -------- 表单 ---------
-            const categoryIds = ref();
+            //const categoryIds = ref();
             const ebook = ref();
             const modalVisible = ref(false);
             const modalLoading = ref(false);
             const handleModalOk = () => {
                 modalLoading.value = true;
-                ebook.value.categoryOneId = categoryIds.value[0];
-                ebook.value.categoryTwoId = categoryIds.value[1];
+                //ebook.value.categoryOneId = categoryIds.value[0];
+                //ebook.value.categoryTwoId = categoryIds.value[1];
                 axios.post("/ebook/save", ebook.value).then((response) => {
-                    modalLoading.value = false;
+                    //modalLoading.value = false;
                     const data = response.data; // data = commonResp
-                    if (data.success) {
+                    if (data.code == 1) {
                         modalVisible.value = false;
-
+                        modalLoading.value = false;
                         // 重新加载列表
                         handleQuery({
-                            page: pagination.value.current,
-                            size: pagination.value.pageSize,
+                            pageNum: pagination.value.current,
+                            pageSize: pagination.value.pageSize,
                         });
                     } else {
                         message.error(data.message);
@@ -208,8 +211,9 @@
               categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
             };*/
 
-            const edit = () => {
+            const edit = (record: any) => {
                 modalVisible.value = true;
+                ebook.value = record;
             };
 
             onMounted(() => {
@@ -229,6 +233,7 @@
 
                 edit,
 
+                ebook,
                 modalVisible,
                 modalLoading,
                 handleModalOk
