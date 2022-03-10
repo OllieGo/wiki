@@ -13,7 +13,7 @@ import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.service.base.inter.IEbookService;
 import com.olliego.wiki.service.extend.inter.EbookExtendService;
 import com.olliego.wiki.utils.CopyUtil;
-import com.olliego.wiki.utils.ObjectCopyUtil;
+import com.olliego.wiki.utils.SnowFlake;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,8 @@ public class EbookExtendServiceImpl implements EbookExtendService {
 
     @Resource
     private IEbookService iEbookService;
+    @Resource
+    private SnowFlake snowFlake;
 
     @Override
     public RestResult<PageVO<EbookVO>> queryPage(EbookSearchParam param) {
@@ -61,6 +63,7 @@ public class EbookExtendServiceImpl implements EbookExtendService {
         Ebook ebook = CopyUtil.copy(param, Ebook.class);
         if (ObjectUtils.isEmpty(param.getId())) {
             //新增
+            ebook.setId(snowFlake.nextId());
             iEbookService.save(ebook);
         } else {
             //更新

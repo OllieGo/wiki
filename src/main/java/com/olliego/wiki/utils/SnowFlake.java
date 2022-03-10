@@ -13,13 +13,13 @@ public class SnowFlake {
     /**
      * 起始的时间戳
      */
-    private final static long START_STMP = 1609459200000L; // 2021-01-01 00:00:00
+    private final static long START_STMP = 1640966400000L; // 2022-01-01 00:00:00
 
     /**
      * 每一部分占用的位数
      */
     private final static long SEQUENCE_BIT = 12; //序列号占用的位数
-    private final static long MACHINE_BIT = 5;   //机器标识占用的位数
+    private final static long MACHINE_BIT = 5;   //机器标识占用的位数(5位即为2^5，最多可以表示32台机器)
     private final static long DATACENTER_BIT = 5;//数据中心占用的位数
 
     /**
@@ -103,9 +103,9 @@ public class SnowFlake {
         // System.out.println(System.currentTimeMillis());
         // System.out.println(new Date().getTime());
         //
-        // String dateTime = "2021-01-01 08:00:00";
-        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        // System.out.println(sdf.parse(dateTime).getTime());
+        //  String dateTime = "2022-01-01 00:00:00";
+        //  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //  System.out.println(sdf.parse(dateTime).getTime());
 
         SnowFlake snowFlake = new SnowFlake(1, 1);
 
