@@ -40,4 +40,10 @@ public class EbookController {
     public RestResult save(@RequestBody EbookSaveParam param) {
         return ebookExtendService.save(param);
     }
+
+    @ApiOperation(value = "电子书保存")
+    @DeleteMapping("/delete/{id}")
+    public RestResult delete(@PathVariable Long id) {
+        return ebookExtendService.delete(id);
+    }
 }

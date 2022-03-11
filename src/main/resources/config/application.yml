@@ -16,3 +16,11 @@ spring:
 # 配置mybatis所有Mapper.xml所在的路径
 mybatis:
   mapper-locations=classpath: /mapper/**/*.xml
+
+
+# Mybatis Plus配置
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0

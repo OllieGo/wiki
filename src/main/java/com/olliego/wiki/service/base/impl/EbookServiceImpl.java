@@ -1,6 +1,8 @@
 package com.olliego.wiki.service.base.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.olliego.wiki.model.Ebook;
 import com.olliego.wiki.dao.EbookMapper;
 import com.olliego.wiki.param.ebook.EbookSearchParam;
@@ -29,5 +31,12 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         wrapper.like(StringUtils.isNotBlank(param.getName()), Ebook::getName, param.getName());
         wrapper.orderByDesc(Ebook::getCreateTime);
         return list(wrapper);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        LambdaUpdateWrapper<Ebook> wrapper = Wrappers.lambdaUpdate();
+        wrapper.eq(Ebook::getId, id);
+        remove(wrapper);
     }
 }

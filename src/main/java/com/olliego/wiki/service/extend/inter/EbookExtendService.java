@@ -27,4 +27,6 @@ public interface EbookExtendService {
 
     RestResult save(EbookSaveParam param);
 
+    RestResult delete(Long id);
+
 }

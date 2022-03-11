@@ -32,16 +32,16 @@
                         <a-button type="primary" @click="edit(record)">
                             编辑
                         </a-button>
-                        <!--<a-popconfirm
-                            title="删除后不可恢复，确认删除?"
-                            ok-text="是"
-                            cancel-text="否"
-                            @confirm="handleDelete(record.id)"
-                        >-->
-                        <a-button type="danger">
-                            删除
-                        </a-button>
-                        <!--</a-popconfirm>-->
+                        <a-popconfirm
+                                title="删除后不可恢复，确认删除?"
+                                ok-text="是"
+                                cancel-text="否"
+                                @confirm="handleDelete(record.id)"
+                        >
+                            <a-button type="danger">
+                                删除
+                            </a-button>
+                        </a-popconfirm>
                     </a-space>
                 </template>
             </a-table>
@@ -65,7 +65,7 @@
                 <a-input v-model:value="ebook.categoryOneId"/>
             </a-form-item>
             <a-form-item label="分类二">
-              <a-input v-model:value="ebook.categoryTwoId" />
+                <a-input v-model:value="ebook.categoryTwoId"/>
             </a-form-item>
             <!--<a-form-item label="分类">
               <a-cascader
@@ -192,7 +192,7 @@
                 //ebook.value.categoryTwoId = categoryIds.value[1];
                 axios.post("/ebook/save", ebook.value).then((response) => {
                     //modalLoading.value = false;
-                    const data = response.data; // data = commonResp
+                    const data = response.data;
                     if (data.code == 1) {
                         modalVisible.value = false;
                         modalLoading.value = false;
@@ -229,6 +229,21 @@
                 ebook.value = {};
             };
 
+            const handleDelete = (id: number) => {
+                axios.delete("/ebook/delete/" + id).then((response) => {
+                    const data = response.data;
+                    if (data.code == 1) {
+                        // 重新加载列表
+                        handleQuery({
+                            pageNum: pagination.value.current,
+                            pageSize: pagination.value.pageSize,
+                        });
+                    } else {
+                        message.error(data.message);
+                    }
+                });
+            };
+
             onMounted(() => {
                 handleQuery({
                     pageNum: 1,
@@ -250,7 +265,8 @@
                 ebook,
                 modalVisible,
                 modalLoading,
-                handleModalOk
+                handleModalOk,
+                handleDelete
             }
         }
     });

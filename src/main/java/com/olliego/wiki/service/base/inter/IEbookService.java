@@ -23,4 +23,6 @@ public interface IEbookService extends IService<Ebook> {
      */
     List<Ebook> listNoPage(EbookSearchParam param);
 
+    void deleteById(Long id);
+
 }

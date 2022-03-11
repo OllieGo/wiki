@@ -4,6 +4,7 @@ package com.olliego.wiki.service.extend.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.olliego.wiki.config.WikiConstants;
 import com.olliego.wiki.model.Ebook;
 import com.olliego.wiki.param.ebook.EbookSaveParam;
 import com.olliego.wiki.param.ebook.EbookSearchParam;
@@ -42,6 +43,7 @@ public class EbookExtendServiceImpl implements EbookExtendService {
     @Override
     public RestResult<PageVO<EbookVO>> queryPage(EbookSearchParam param) {
         LambdaQueryWrapper<Ebook> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Ebook::getDeleted, WikiConstants.ZERO);
         queryWrapper.like(StringUtils.isNotBlank(param.getName()), Ebook::getName, param.getName());
         queryWrapper.orderByDesc(Ebook::getId);
         IPage<Ebook> page = iEbookService.page(new Page<>(param.getPageNum(), param.getPageSize()), queryWrapper);
@@ -70,6 +72,12 @@ public class EbookExtendServiceImpl implements EbookExtendService {
             iEbookService.updateById(ebook);
         }
 
+        return RestResult.wrapSuccessResponse();
+    }
+
+    @Override
+    public RestResult delete(Long id) {
+        iEbookService.deleteById(id);
         return RestResult.wrapSuccessResponse();
     }
 }
