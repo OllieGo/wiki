@@ -3,6 +3,7 @@ import com.olliego.wiki.param.base.RestPageParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author: olliego
@@ -12,6 +13,7 @@ import lombok.Data;
  * @Date: 2022/2/11 10:50
  */
 @Data
+@NoArgsConstructor
 @ApiModel(value = "电子书查询模型")
 public class EbookSearchParam extends RestPageParam {
 
