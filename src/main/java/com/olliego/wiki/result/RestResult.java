@@ -1,4 +1,4 @@
-package com.olliego.wiki.resp;
+package com.olliego.wiki.result;
 
 import com.olliego.wiki.constants.AbstractRestConstants;
 

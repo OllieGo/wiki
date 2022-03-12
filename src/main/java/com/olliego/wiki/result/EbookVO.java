@@ -1,6 +1,8 @@
 package com.olliego.wiki.result;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +22,7 @@ public class EbookVO implements Serializable {
 
     private static final long serialVersionUID = 5051851466968966592L;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     @ApiModelProperty(value = "id")
     private Long id;
 

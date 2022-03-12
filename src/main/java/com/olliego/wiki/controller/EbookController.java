@@ -3,7 +3,7 @@ package com.olliego.wiki.controller;
 
 import com.olliego.wiki.param.ebook.EbookSaveParam;
 import com.olliego.wiki.param.ebook.EbookSearchParam;
-import com.olliego.wiki.resp.RestResult;
+import com.olliego.wiki.result.RestResult;
 import com.olliego.wiki.result.EbookVO;
 import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.service.extend.inter.EbookExtendService;
@@ -35,13 +35,13 @@ public class EbookController {
         return ebookExtendService.queryPage(param);
     }
 
-    @ApiOperation(value = "电子书保存")
+    @ApiOperation(value = "新增/更新")
     @PostMapping("/save")
     public RestResult save(@RequestBody EbookSaveParam param) {
         return ebookExtendService.save(param);
     }
 
-    @ApiOperation(value = "电子书保存")
+    @ApiOperation(value = "删除")
     @DeleteMapping("/delete/{id}")
     public RestResult delete(@PathVariable Long id) {
         return ebookExtendService.delete(id);

@@ -2,7 +2,7 @@ package com.olliego.wiki.service.extend.inter;
 
 import com.olliego.wiki.param.ebook.EbookSaveParam;
 import com.olliego.wiki.param.ebook.EbookSearchParam;
-import com.olliego.wiki.resp.RestResult;
+import com.olliego.wiki.result.RestResult;
 import com.olliego.wiki.result.EbookVO;
 import com.olliego.wiki.result.PageVO;
 

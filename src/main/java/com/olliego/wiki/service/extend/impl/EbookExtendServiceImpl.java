@@ -8,7 +8,7 @@ import com.olliego.wiki.config.WikiConstants;
 import com.olliego.wiki.model.Ebook;
 import com.olliego.wiki.param.ebook.EbookSaveParam;
 import com.olliego.wiki.param.ebook.EbookSearchParam;
-import com.olliego.wiki.resp.RestResult;
+import com.olliego.wiki.result.RestResult;
 import com.olliego.wiki.result.EbookVO;
 import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.service.base.inter.IEbookService;
