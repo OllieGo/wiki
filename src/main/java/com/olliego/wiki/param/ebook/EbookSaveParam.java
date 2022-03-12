@@ -1,9 +1,10 @@
 package com.olliego.wiki.param.ebook;
 import com.olliego.wiki.param.base.RestPageParam;
-import com.sun.istack.internal.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author: olliego
@@ -20,6 +21,7 @@ public class EbookSaveParam extends RestPageParam {
 
     private Long id;
 
+    @NotNull(message = "名称不能为空")
     @ApiModelProperty(value = "电子书名称")
     private String name;
 

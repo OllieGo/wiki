@@ -191,11 +191,10 @@
                 //ebook.value.categoryOneId = categoryIds.value[0];
                 //ebook.value.categoryTwoId = categoryIds.value[1];
                 axios.post("/ebook/save", ebook.value).then((response) => {
-                    //modalLoading.value = false;
+                    modalLoading.value = false;
                     const data = response.data;
                     if (data.code == 1) {
                         modalVisible.value = false;
-                        modalLoading.value = false;
                         // 重新加载列表
                         handleQuery({
                             pageNum: pagination.value.current,
