@@ -24,7 +24,7 @@
       <a-table
           :columns="columns"
           :row-key="record => record.id"
-          :data-source="ebooks"
+          :data-source="categorys"
           :pagination="pagination"
           :loading="loading"
           @change="handleTableChange"
@@ -37,7 +37,7 @@
         </template>-->
         <template v-slot:action="{ text, record }">
           <a-space size="small">
-            <!--<router-link :to="'/admin/doc?ebookId=' + record.id">
+            <!--<router-link :to="'/admin/doc?categoryId=' + record.id">
               <a-button type="primary">
                 文档管理
               </a-button>
@@ -62,33 +62,20 @@
   </a-layout>
 
   <a-modal
-      title="电子书表单"
+      title="分类表单"
       v-model:visible="modalVisible"
       :confirm-loading="modalLoading"
       @ok="handleModalOk"
   >
-    <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <a-form-item label="封面">
-        <a-input v-model:value="ebook.cover"/>
-      </a-form-item>
+    <a-form :model="category" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="名称">
-        <a-input v-model:value="ebook.name"/>
+        <a-input v-model:value="category.name"/>
       </a-form-item>
-      <a-form-item label="分类一">
-        <a-input v-model:value="ebook.categoryOneId"/>
+      <a-form-item label="父分类">
+        <a-input v-model:value="category.parent"/>
       </a-form-item>
-      <a-form-item label="分类二">
-        <a-input v-model:value="ebook.categoryTwoId"/>
-      </a-form-item>
-      <!--<a-form-item label="分类">
-        <a-cascader
-                v-model:value="categoryIds"
-                :field-names="{ label: 'name', value: 'id', children: 'children' }"
-                :options="level1"
-        />
-      </a-form-item>-->
-      <a-form-item label="描述">
-        <a-input v-model:value="ebook.description" type="textarea"/>
+      <a-form-item label="顺序">
+        <a-input v-model:value="category.sort"/>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -101,11 +88,11 @@ import {Tool} from "@/util/tool";
 import {message} from 'ant-design-vue';
 
 export default defineComponent({
-  name: 'AdminEbook',
+  name: 'AdminCategory',
   setup() {
     const param = ref();
     param.value = {};
-    const ebooks = ref();
+    const categorys = ref();
     const pagination = ref({
       current: 1,
       pageSize: 10,
@@ -115,35 +102,16 @@ export default defineComponent({
 
     const columns = [
       {
-        title: '封面',
-        dataIndex: 'cover',
-        slots: {customRender: 'cover'}
-      },
-      {
         title: '名称',
         dataIndex: 'name'
       },
       {
-        title: '分类一',
-        dataIndex: 'categoryOneId'
-        //slots: {customRender: 'categoryOneId'}
+        title: '父分类',
+        dataIndex: 'parent'
       },
       {
-        title: '分类二',
-        dataIndex: 'categoryTwoId'
-        //slots: {customRender: 'categoryTwoId'}
-      },
-      {
-        title: '文档数',
-        dataIndex: 'docCount'
-      },
-      {
-        title: '阅读数',
-        dataIndex: 'viewCount'
-      },
-      {
-        title: '点赞数',
-        dataIndex: 'voteCount'
+        title: '顺序',
+        dataIndex: 'sort'
       },
       {
         title: 'Action',
@@ -158,14 +126,14 @@ export default defineComponent({
     const handleQuery = (params: any) => {
       loading.value = true;
       // 如果不清空现有数据，则编辑保存重新加载数据后，再点编辑，则列表显示的还是编辑前的数据
-      ebooks.value = [];
+      categorys.value = [];
       let data = {
         'pageNum': params.pageNum,
         'pageSize': params.pageSize,
         'name': param.value.name
       }
 
-      axios.post("/ebook/page",
+      axios.post("/category/page",
           data
       ).then((response) => {
         loading.value = false;
@@ -173,11 +141,11 @@ export default defineComponent({
         console.log("data");
         console.log(data);
         if (data.code == 1) {
-          ebooks.value = data.data.list;
+          categorys.value = data.data.list;
 
           // 重置分页按钮
-          pagination.value.current = params.page;
-          pagination.value.total = data.totalSize;
+          pagination.value.current = params.pageNum;
+          pagination.value.total = data.data.totalSize;
         } else {
           message.error(data.message);
         }
@@ -197,14 +165,14 @@ export default defineComponent({
 
     // -------- 表单 ---------
     //const categoryIds = ref();
-    const ebook = ref();
+    const category = ref();
     const modalVisible = ref(false);
     const modalLoading = ref(false);
     const handleModalOk = () => {
       modalLoading.value = true;
-      //ebook.value.categoryOneId = categoryIds.value[0];
-      //ebook.value.categoryTwoId = categoryIds.value[1];
-      axios.post("/ebook/save", ebook.value).then((response) => {
+      //category.value.categoryOneId = categoryIds.value[0];
+      //category.value.categoryTwoId = categoryIds.value[1];
+      axios.post("/category/save", category.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
         if (data.code == 1) {
@@ -225,13 +193,13 @@ export default defineComponent({
      */
     /*const edit = (record: any) => {
       modalVisible.value = true;
-      ebook.value = Tool.copy(record);
-      categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
+      category.value = Tool.copy(record);
+      categoryIds.value = [category.value.category1Id, category.value.category2Id]
     };*/
 
     const edit = (record: any) => {
       modalVisible.value = true;
-      ebook.value = Tool.copy(record);
+      category.value = Tool.copy(record);
     };
 
     /**
@@ -239,11 +207,11 @@ export default defineComponent({
      */
     const add = () => {
       modalVisible.value = true;
-      ebook.value = {};
+      category.value = {};
     };
 
     const handleDelete = (id: number) => {
-      axios.delete("/ebook/delete/" + id).then((response) => {
+      axios.delete("/category/delete/" + id).then((response) => {
         const data = response.data;
         if (data.code == 1) {
           // 重新加载列表
@@ -266,7 +234,7 @@ export default defineComponent({
 
     return {
       param,
-      ebooks,
+      categorys,
       pagination,
       columns,
       loading,
@@ -276,7 +244,7 @@ export default defineComponent({
       edit,
       add,
 
-      ebook,
+      category,
       modalVisible,
       modalLoading,
       handleModalOk,

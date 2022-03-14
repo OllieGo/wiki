@@ -1,5 +1,6 @@
 package com.olliego.wiki.param.ebook;
-import com.olliego.wiki.param.base.RestPageParam;
+
+import com.olliego.wiki.param.base.RestParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "电子书保存模型")
-public class EbookSaveParam extends RestPageParam {
+public class EbookSaveParam extends RestParam {
 
     private static final long serialVersionUID = -8459140131862628628L;
 

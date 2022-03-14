@@ -1,5 +1,7 @@
 package com.olliego.wiki.service.base.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.olliego.wiki.model.Category;
 import com.olliego.wiki.dao.CategoryMapper;
 import com.olliego.wiki.service.base.inter.ICategoryService;
@@ -17,4 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService {
 
+    @Override
+    public void deleteById(Long id) {
+        LambdaUpdateWrapper<Category> wrapper = Wrappers.lambdaUpdate();
+        wrapper.eq(Category::getId, id);
+        remove(wrapper);
+    }
 }
