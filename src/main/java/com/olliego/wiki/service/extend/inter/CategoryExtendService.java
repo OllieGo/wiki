@@ -6,9 +6,13 @@ import com.olliego.wiki.result.CategoryVO;
 import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.result.RestResult;
 
+import java.util.List;
+
 public interface CategoryExtendService {
 
     RestResult<PageVO<CategoryVO>> queryPage(CategorySearchParam param);
+
+    RestResult<List<CategoryVO>> listNoPage();
 
     RestResult save(CategorySaveParam param);
 

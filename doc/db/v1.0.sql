@@ -89,3 +89,5 @@ INSERT INTO `category`(`id`, `parent`, `name`, `sort`)
 VALUES (501, 500, '服务器', 501);
 INSERT INTO `category`(`id`, `parent`, `name`, `sort`)
 VALUES (502, 500, '开发工具', 502);
+INSERT INTO `category`(`id`, `parent`, `name`, `sort`)
+VALUES (503, 500, '操作系统', 503);

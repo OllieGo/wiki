@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -32,6 +33,12 @@ public class CategoryController {
     @PostMapping("/page")
     public RestResult<PageVO<CategoryVO>> page(@RequestBody CategorySearchParam param) {
         return categoryExtendService.queryPage(param);
+    }
+
+    @ApiOperation(value = "分类列表")
+    @PostMapping("/all")
+    public RestResult<List<CategoryVO>> all() {
+        return categoryExtendService.listNoPage();
     }
 
     @ApiOperation(value = "新增/更新")

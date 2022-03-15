@@ -176,8 +176,8 @@ export default defineComponent({
           ebooks.value = data.data.list;
 
           // 重置分页按钮
-          pagination.value.current = params.page;
-          pagination.value.total = data.totalSize;
+          pagination.value.current = params.pageNum;
+          pagination.value.total = data.data.totalSize;
         } else {
           message.error(data.message);
         }
