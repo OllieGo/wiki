@@ -12,7 +12,7 @@ public interface CategoryExtendService {
 
     RestResult<PageVO<CategoryVO>> queryPage(CategorySearchParam param);
 
-    RestResult<List<CategoryVO>> listNoPage();
+    RestResult<List<CategoryVO>> listNoPage(CategorySearchParam param);
 
     RestResult save(CategorySaveParam param);
 

@@ -37,8 +37,8 @@ public class CategoryController {
 
     @ApiOperation(value = "分类列表")
     @PostMapping("/all")
-    public RestResult<List<CategoryVO>> all() {
-        return categoryExtendService.listNoPage();
+    public RestResult<List<CategoryVO>> all(@RequestBody CategorySearchParam param) {
+        return categoryExtendService.listNoPage(param);
     }
 
     @ApiOperation(value = "新增/更新")

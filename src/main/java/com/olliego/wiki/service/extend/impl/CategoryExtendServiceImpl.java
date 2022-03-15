@@ -54,10 +54,10 @@ public class CategoryExtendServiceImpl implements CategoryExtendService {
     }
 
     @Override
-    public RestResult<List<CategoryVO>> listNoPage() {
+    public RestResult<List<CategoryVO>> listNoPage(CategorySearchParam param) {
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Category::getDeleted, WikiConstants.ZERO);
-        //queryWrapper.like(StringUtils.isNotBlank(param.getName()), Category::getName, param.getName());
+        queryWrapper.like(StringUtils.isNotBlank(param.getName()), Category::getName, param.getName());
         queryWrapper.orderByAsc(Category::getSort);
         List<Category> categoryList = iCategoryService.list(queryWrapper);
         List<CategoryVO> categoryVOS = CopyUtil.copyList(categoryList, CategoryVO.class);
