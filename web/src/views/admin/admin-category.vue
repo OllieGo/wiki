@@ -6,12 +6,8 @@
       <p>
         <a-form layout="inline" :model="param">
           <a-form-item>
-            <a-input v-model:value="param.name" placeholder="名称">
-            </a-input>
-          </a-form-item>
-          <a-form-item>
             <a-button type="primary" @click="handleQuery()">
-              查询
+              刷新
             </a-button>
           </a-form-item>
           <a-form-item>
