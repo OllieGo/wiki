@@ -215,7 +215,7 @@
             const edit = (record: any) => {
                 modalVisible.value = true;
                 ebook.value = Tool.copy(record);
-                categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
+              categoryIds.value = [ebook.value.categoryOneId, ebook.value.categoryTwoId]
             };
 
             /**
