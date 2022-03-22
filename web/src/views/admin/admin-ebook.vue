@@ -80,7 +80,9 @@
                         v-model:value="categoryIds"
                         :field-names="{ label: 'name', value: 'id', children: 'children' }"
                         :options="level1"
+                        placeholder="请选择"
                 />
+                {{ categoryIds }}
             </a-form-item>
             <a-form-item label="描述">
                 <a-input v-model:value="ebook.description" type="textarea"/>

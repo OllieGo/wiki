@@ -22,4 +22,7 @@ public class EbookSearchParam extends RestPageParam {
     @ApiModelProperty(value = "电子书名称")
     private String name;
 
+    @ApiModelProperty(value = "分类二")
+    private Long categoryTwoId;
+
 }

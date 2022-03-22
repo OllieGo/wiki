@@ -23,6 +23,7 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -44,6 +45,7 @@ public class EbookExtendServiceImpl implements EbookExtendService {
     public RestResult<PageVO<EbookVO>> queryPage(EbookSearchParam param) {
         LambdaQueryWrapper<Ebook> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Ebook::getDeleted, WikiConstants.ZERO);
+        queryWrapper.eq(Objects.nonNull(param.getCategoryTwoId()), Ebook::getCategoryTwoId, param.getCategoryTwoId());
         queryWrapper.like(StringUtils.isNotBlank(param.getName()), Ebook::getName, param.getName());
         queryWrapper.orderByDesc(Ebook::getId);
         IPage<Ebook> page = iEbookService.page(new Page<>(param.getPageNum(), param.getPageSize()), queryWrapper);
