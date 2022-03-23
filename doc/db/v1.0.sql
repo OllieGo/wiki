@@ -91,3 +91,40 @@ INSERT INTO `category`(`id`, `parent`, `name`, `sort`)
 VALUES (502, 500, '开发工具', 502);
 INSERT INTO `category`(`id`, `parent`, `name`, `sort`)
 VALUES (503, 500, '操作系统', 503);
+
+
+-- 文档表
+drop table if exists `doc`;
+
+CREATE TABLE `doc`
+(
+    `id`            bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `create_people` varchar(45) DEFAULT NULL COMMENT '创建人',
+    `create_time`   datetime    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modify_people` varchar(45) DEFAULT NULL COMMENT '修改人',
+    `modify_time`   datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `deleted`       int(1) DEFAULT '0' COMMENT '是否删除 0正常 1删除',
+
+    `ebook_id`      bigint(20) NOT NULL DEFAULT '0' COMMENT '电子书id',
+    `parent`        bigint(20) NOT NULL DEFAULT '0' COMMENT '父id',
+    `name`          varchar(45) NOT NULL COMMENT '名称',
+    `sort`          int(10) DEFAULT '0' COMMENT '顺序',
+    `view_count`    int(10) DEFAULT '0' COMMENT '阅读数',
+    `vote_count`    int(10) DEFAULT '0' COMMENT '点赞数',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文档表';
+
+
+INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
+VALUES (1, 1, 0, '文档1', 1, 0, 0);
+INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
+VALUES (2, 1, 1, '文档1.1', 1, 0, 0);
+INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
+VALUES (3, 1, 0, '文档2', 2, 0, 0);
+INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
+VALUES (4, 1, 3, '文档2.1', 1, 0, 0);
+INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
+VALUES (5, 1, 3, '文档2.2', 2, 0, 0);
+INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
+VALUES (6, 1, 5, '文档2.2.1', 1, 0, 0);
+
