@@ -87,4 +87,10 @@ public class DocExtendServiceImpl implements DocExtendService {
         iDocService.deleteById(id);
         return RestResult.wrapSuccessResponse();
     }
+
+    @Override
+    public RestResult delete(List<Long> ids) {
+        iDocService.deleteByIds(ids);
+        return RestResult.wrapSuccessResponse();
+    }
 }

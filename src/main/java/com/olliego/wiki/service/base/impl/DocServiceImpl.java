@@ -8,6 +8,8 @@ import com.olliego.wiki.service.base.inter.IDocService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 文档表 服务实现类
@@ -23,6 +25,13 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements IDocS
     public void deleteById(Long id) {
         LambdaUpdateWrapper<Doc> wrapper = Wrappers.lambdaUpdate();
         wrapper.eq(Doc::getId, id);
+        remove(wrapper);
+    }
+
+    @Override
+    public void deleteByIds(List<Long> ids) {
+        LambdaUpdateWrapper<Doc> wrapper = Wrappers.lambdaUpdate();
+        wrapper.in(Doc::getId, ids);
         remove(wrapper);
     }
 

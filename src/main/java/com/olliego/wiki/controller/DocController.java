@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,9 +52,15 @@ public class DocController {
     }
 
     @ApiOperation(value = "删除")
-    @DeleteMapping("/delete/{id}")
-    public RestResult delete(@PathVariable Long id) {
-        return docExtendService.delete(id);
+    @DeleteMapping("/delete/{idsStr}")
+    public RestResult delete(@PathVariable String idsStr) {
+        List<String> list = Arrays.asList(idsStr.split(","));
+        List<Long> idsLong = new ArrayList<>();
+        for (String id : list) {
+            Long a = Long.valueOf(id);
+            idsLong.add(a);
+        }
+        return docExtendService.delete(idsLong);
     }
     
 }

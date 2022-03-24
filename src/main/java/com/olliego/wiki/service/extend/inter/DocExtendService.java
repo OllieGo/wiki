@@ -17,4 +17,6 @@ public interface DocExtendService {
     RestResult save(DocSaveParam param);
 
     RestResult delete(Long id);
+
+    RestResult delete(List<Long> ids);
 }
