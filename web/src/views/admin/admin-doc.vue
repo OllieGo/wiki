@@ -70,18 +70,21 @@
       </a-form-item>
       <a-form-item label="父文档">
         <a-tree-select
-                v-model:value="doc.parent"
-                style="width: 100%"
-                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-                :tree-data="treeSelectData"
-                placeholder="请选择父文档"
-                tree-default-expand-all
-                :replaceFields="{title: 'name', key: 'id', value: 'id'}"
+            v-model:value="doc.parent"
+            style="width: 100%"
+            :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+            :tree-data="treeSelectData"
+            placeholder="请选择父文档"
+            tree-default-expand-all
+            :replaceFields="{title: 'name', key: 'id', value: 'id'}"
         >
         </a-tree-select>
       </a-form-item>
       <a-form-item label="顺序">
         <a-input v-model:value="doc.sort"/>
+      </a-form-item>
+      <a-form-item>
+        <div id="content"></div>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -94,6 +97,7 @@ import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
 import {message, Modal} from 'ant-design-vue';
 import {ExclamationCircleOutlined} from "@ant-design/icons-vue";
+import E from 'wangeditor'
 
 export default defineComponent({
   name: 'AdminDoc',
@@ -188,6 +192,7 @@ export default defineComponent({
     };
     const modalVisible = ref(false);
     const modalLoading = ref(false);
+    const editor = new E('#content');
     const handleModalOk = () => {
       modalLoading.value = true;
       axios.post("/doc/save", doc.value).then((response) => {
@@ -331,6 +336,8 @@ export default defineComponent({
 
     onMounted(() => {
       handleQuery();
+
+      editor.create();
     });
 
     return {
