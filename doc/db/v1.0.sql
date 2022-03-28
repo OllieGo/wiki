@@ -128,3 +128,20 @@ VALUES (5, 1, 3, '文档2.2', 2, 0, 0);
 INSERT INTO `doc`(`id`, `ebook_id`, `parent`, `name`, `sort`, `view_count`, `vote_count`)
 VALUES (6, 1, 5, '文档2.2.1', 1, 0, 0);
 
+-- 文档内容表
+drop table if exists `content`;
+
+CREATE TABLE `content`
+(
+    `id`            bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `create_people` varchar(45) DEFAULT NULL COMMENT '创建人',
+    `create_time`   datetime    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modify_people` varchar(45) DEFAULT NULL COMMENT '修改人',
+    `modify_time`   datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `deleted`       int(1) DEFAULT '0' COMMENT '是否删除 0正常 1删除',
+
+    `content`       mediumtext NOT NULL COMMENT '内容',
+
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文档内容表';
+
