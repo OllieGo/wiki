@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IContentService extends IService<Content> {
 
+    Content queryContentById(Long id);
 }

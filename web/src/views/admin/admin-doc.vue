@@ -87,6 +87,10 @@
         </a-col>
       </a-row>
 
+      <a-drawer width="900" placement="right" :closable="false" :visible="drawerVisible" @close="onDrawerClose">
+        <div class="wangeditor" :innerHTML="previewHtml"></div>
+      </a-drawer>
+
     </a-layout-content>
   </a-layout>
 
@@ -195,10 +199,12 @@ export default defineComponent({
     };
     const modalVisible = ref(false);
     const modalLoading = ref(false);
-
+    const editor = new E('#content');
+    editor.config.zIndex = 0;
 
     const handleSave = () => {
       modalLoading.value = true;
+      doc.value.content = editor.txt.html();
       axios.post("/doc/save", doc.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
@@ -341,9 +347,8 @@ export default defineComponent({
     onMounted(() => {
       handleQuery();
 
-      const editor = new E('#content');
-      editor.config.zIndex = 0;
       editor.create();
+
     });
 
     return {
