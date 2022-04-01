@@ -116,4 +116,13 @@ public class DocExtendServiceImpl implements DocExtendService {
         iDocService.deleteByIds(ids);
         return RestResult.wrapSuccessResponse();
     }
+
+    @Override
+    public RestResult findContent(Long id) {
+        Content content = iContentService.queryContentById(id);
+        if (content != null) {
+            return RestResult.wrapSuccessResponse(content.getContent());
+        }
+        return RestResult.wrapSuccessResponse();
+    }
 }
