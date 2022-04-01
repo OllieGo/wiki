@@ -19,4 +19,6 @@ public interface DocExtendService {
     RestResult delete(Long id);
 
     RestResult delete(List<Long> ids);
+
+    RestResult findContent(Long id);
 }

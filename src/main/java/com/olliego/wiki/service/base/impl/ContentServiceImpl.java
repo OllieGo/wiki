@@ -1,5 +1,6 @@
 package com.olliego.wiki.service.base.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.olliego.wiki.model.Content;
 import com.olliego.wiki.dao.ContentMapper;
 import com.olliego.wiki.service.base.inter.IContentService;
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> implements IContentService {
 
+    @Override
+    public Content queryContentById(Long id) {
+        LambdaQueryWrapper<Content> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Content::getId, id);
+        wrapper.eq(Content::getDeleted, 0);
+        return getOne(wrapper);
+    }
 }

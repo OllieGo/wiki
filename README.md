@@ -5,7 +5,9 @@
 * Spring Boot
 * Vue3
 
+安装wangeditor(web富文本编辑器)
 
+`npm i wangeditor@4.6.3 --save`
 
 ### 联系我
 

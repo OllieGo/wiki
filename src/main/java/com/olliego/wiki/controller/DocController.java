@@ -62,5 +62,11 @@ public class DocController {
         }
         return docExtendService.delete(idsLong);
     }
-    
+
+    @ApiOperation(value = "查询文档内容")
+    @GetMapping("/find-content/{id}")
+    public RestResult findContent(@PathVariable Long id) {
+        return docExtendService.findContent(id);
+    }
+
 }

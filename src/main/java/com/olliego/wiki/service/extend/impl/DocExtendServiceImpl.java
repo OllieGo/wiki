@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.config.WikiConstants;
+import com.olliego.wiki.model.Content;
 import com.olliego.wiki.model.Doc;
 import com.olliego.wiki.param.doc.DocSaveParam;
 import com.olliego.wiki.param.doc.DocSearchParam;
 import com.olliego.wiki.result.DocVO;
 import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.result.RestResult;
+import com.olliego.wiki.service.base.inter.IContentService;
 import com.olliego.wiki.service.base.inter.IDocService;
 import com.olliego.wiki.service.extend.inter.DocExtendService;
 import com.olliego.wiki.utils.CopyUtil;
@@ -32,6 +34,8 @@ public class DocExtendServiceImpl implements DocExtendService {
     private IDocService iDocService;
     @Resource
     private SnowFlake snowFlake;
+    @Resource
+    private IContentService iContentService;
 
     @Override
     public RestResult<PageVO<DocVO>> queryPage(DocSearchParam param) {
@@ -67,16 +71,35 @@ public class DocExtendServiceImpl implements DocExtendService {
 
     @Override
     public RestResult save(DocSaveParam param) {
-        Doc Doc = CopyUtil.copy(param, Doc.class);
+        Doc doc = CopyUtil.copy(param, Doc.class);
+        Content content = new Content();
+        content.setContent(param.getContent());
+        Date now = Date.from(Instant.now());
+
         if (ObjectUtils.isEmpty(param.getId())) {
             //新增
-            Doc.setId(snowFlake.nextId());
-            Date now = Date.from(Instant.now());
-            Doc.setCreateTime(now);
-            iDocService.save(Doc);
+            doc.setId(snowFlake.nextId());
+            doc.setCreateTime(now);
+            iDocService.save(doc);
+
+            content.setId(doc.getId());
+            content.setCreateTime(now);
+            iContentService.save(content);
         } else {
             //更新
-            iDocService.updateById(Doc);
+            iDocService.updateById(doc);
+
+            Content oldContent = iContentService.queryContentById(param.getId());
+            if (oldContent != null) {
+                content.setId(oldContent.getId());
+                content.setModifyTime(now);
+                iContentService.updateById(content);
+            } else {
+                content.setId(doc.getId());
+                content.setCreateTime(now);
+                iContentService.save(content);
+            }
+
         }
 
         return RestResult.wrapSuccessResponse();
@@ -91,6 +114,15 @@ public class DocExtendServiceImpl implements DocExtendService {
     @Override
     public RestResult delete(List<Long> ids) {
         iDocService.deleteByIds(ids);
+        return RestResult.wrapSuccessResponse();
+    }
+
+    @Override
+    public RestResult findContent(Long id) {
+        Content content = iContentService.queryContentById(id);
+        if (content != null) {
+            return RestResult.wrapSuccessResponse(content.getContent());
+        }
         return RestResult.wrapSuccessResponse();
     }
 }

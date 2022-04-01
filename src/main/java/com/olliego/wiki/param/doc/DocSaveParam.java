@@ -88,4 +88,10 @@ public class DocSaveParam extends RestParam {
      * 点赞数
      */
     private Integer voteCount;
+
+    /**
+     * 内容
+     */
+    @NotNull(message = "内容不能为空")
+    private String content;
 }

@@ -87,6 +87,10 @@
         </a-col>
       </a-row>
 
+      <a-drawer width="900" placement="right" :closable="false" :visible="drawerVisible" @close="onDrawerClose">
+        <div class="wangeditor" :innerHTML="previewHtml"></div>
+      </a-drawer>
+
     </a-layout-content>
   </a-layout>
 
@@ -195,10 +199,12 @@ export default defineComponent({
     };
     const modalVisible = ref(false);
     const modalLoading = ref(false);
-
+    const editor = new E('#content');
+    editor.config.zIndex = 0;
 
     const handleSave = () => {
       modalLoading.value = true;
+      doc.value.content = editor.txt.html();
       axios.post("/doc/save", doc.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
@@ -278,17 +284,28 @@ export default defineComponent({
     };
 
     /**
+     * 内容查询
+     **/
+    const handleQueryContent = () => {
+      axios.get("/doc/find-content/" + doc.value.id).then((response) => {
+        const data = response.data;
+        if (data.code == 1) {
+          editor.txt.html(data.data);
+        } else {
+          message.error(data.message);
+        }
+      });
+    };
+
+    /**
      * 编辑
      */
-    /*const edit = (record: any) => {
-      modalVisible.value = true;
-      doc.value = Tool.copy(record);
-      docIds.value = [doc.value.doc1Id, doc.value.doc2Id]
-    };*/
-
     const edit = (record: any) => {
+      //清空富文本框
+      editor.txt.html("");
       modalVisible.value = true;
       doc.value = Tool.copy(record);
+      handleQueryContent();
 
       // 不能选择当前节点及其所有子孙节点，作为父节点，会使树断开
       treeSelectData.value = Tool.copy(level1.value);
@@ -302,6 +319,8 @@ export default defineComponent({
      * 新增
      */
     const add = () => {
+      //清空富文本框
+      editor.txt.html("");
       modalVisible.value = true;
       doc.value = {
         ebookId: route.query.ebookId
@@ -341,9 +360,8 @@ export default defineComponent({
     onMounted(() => {
       handleQuery();
 
-      const editor = new E('#content');
-      editor.config.zIndex = 0;
       editor.create();
+
     });
 
     return {
