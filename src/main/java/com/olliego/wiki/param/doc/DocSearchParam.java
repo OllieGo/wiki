@@ -23,4 +23,7 @@ public class DocSearchParam extends RestPageParam {
     @ApiModelProperty(value = "文档名称")
     private String name;
 
+    @ApiModelProperty(value = "文档id")
+    private Long ebookId;
+
 }
