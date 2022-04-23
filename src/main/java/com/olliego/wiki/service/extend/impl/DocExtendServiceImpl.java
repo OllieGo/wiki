@@ -26,6 +26,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DocExtendServiceImpl implements DocExtendService {
@@ -40,6 +41,7 @@ public class DocExtendServiceImpl implements DocExtendService {
     @Override
     public RestResult<PageVO<DocVO>> queryPage(DocSearchParam param) {
         LambdaQueryWrapper<Doc> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Doc::getEbookId, param.getEbookId());
         queryWrapper.eq(Doc::getDeleted, WikiConstants.ZERO);
         queryWrapper.like(StringUtils.isNotBlank(param.getName()), Doc::getName, param.getName());
         queryWrapper.orderByAsc(Doc::getSort);
@@ -60,6 +62,7 @@ public class DocExtendServiceImpl implements DocExtendService {
     @Override
     public RestResult<List<DocVO>> listNoPage(DocSearchParam param) {
         LambdaQueryWrapper<Doc> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Doc::getEbookId, param.getEbookId());
         queryWrapper.eq(Doc::getDeleted, WikiConstants.ZERO);
         queryWrapper.like(StringUtils.isNotBlank(param.getName()), Doc::getName, param.getName());
         queryWrapper.orderByAsc(Doc::getSort);
@@ -120,9 +123,10 @@ public class DocExtendServiceImpl implements DocExtendService {
     @Override
     public RestResult findContent(Long id) {
         Content content = iContentService.queryContentById(id);
-        if (content != null) {
-            return RestResult.wrapSuccessResponse(content.getContent());
+        if (Objects.isNull(content)) {
+            RestResult.wrapSuccessResponse("");
         }
-        return RestResult.wrapSuccessResponse();
+
+        return RestResult.wrapSuccessResponse(content.getContent());
     }
 }
