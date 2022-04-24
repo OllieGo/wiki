@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * @author olliego
  * @since 2022-04-24
  */
+@Data
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,10 +66,10 @@ public class User implements Serializable {
     private String loginName;
 
     /**
-     * 用户名
+     * 昵称
      */
-    @TableField("user_name")
-    private String userName;
+    @TableField("name")
+    private String name;
 
     /**
      * 密码
@@ -75,90 +77,4 @@ public class User implements Serializable {
     @TableField("password")
     private String password;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCreatePeople() {
-        return createPeople;
-    }
-
-    public void setCreatePeople(String createPeople) {
-        this.createPeople = createPeople;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getModifyPeople() {
-        return modifyPeople;
-    }
-
-    public void setModifyPeople(String modifyPeople) {
-        this.modifyPeople = modifyPeople;
-    }
-
-    public LocalDateTime getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(LocalDateTime modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public Integer getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", createPeople=" + createPeople +
-                ", createTime=" + createTime +
-                ", modifyPeople=" + modifyPeople +
-                ", modifyTime=" + modifyTime +
-                ", deleted=" + deleted +
-                ", loginName=" + loginName +
-                ", userName=" + userName +
-                ", password=" + password +
-                "}";
-    }
 }

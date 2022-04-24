@@ -157,9 +157,11 @@ CREATE TABLE `user`
     `deleted`       int(1) DEFAULT '0' COMMENT '是否删除 0正常 1删除',
 
     `login_name`    varchar(50) NOT NULL COMMENT '登录名',
-    `user_name`     varchar(50) NOT NULL COMMENT '用户名',
+    `name`          varchar(50) NOT NULL COMMENT '昵称',
     `password`      varchar(32) NOT NULL COMMENT '密码',
     PRIMARY KEY (`id`),
     unique key `login_name_unique` (`login_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
+insert into `user` (id, `login_name`, `name`, `password`)
+values (1, 'test', '测试', 'test1234');
