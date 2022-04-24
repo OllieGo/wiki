@@ -30,7 +30,7 @@ public class MyBatisGenerator {
     //作者名
     private final String author = "olliego";
     //指定生成的表名
-    private final String[] tableNames = new String[]{"ebook"};
+    private final String[] tableNames = new String[]{"user"};
 
     //输出的目录
     public static final String OUT_DIR = "/src/main/java/";

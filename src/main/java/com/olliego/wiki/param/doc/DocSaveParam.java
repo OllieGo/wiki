@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -70,7 +71,7 @@ public class DocSaveParam extends RestParam {
     /**
      * 名称
      */
-    @NotNull(message = "名称不能为空")
+    @NotBlank(message = "名称不能为空")
     private String name;
 
     /**

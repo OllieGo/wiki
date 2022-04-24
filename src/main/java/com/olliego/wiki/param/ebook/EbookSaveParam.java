@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -22,7 +23,7 @@ public class EbookSaveParam extends RestParam {
 
     private Long id;
 
-    @NotNull(message = "名称不能为空")
+    @NotBlank(message = "名称不能为空")
     @ApiModelProperty(value = "电子书名称")
     private String name;
 

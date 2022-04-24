@@ -1,6 +1,5 @@
 package com.olliego.wiki.result;
 
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
@@ -9,19 +8,11 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 文档表
- * </p>
- *
- * @author olliego
- * @since 2022-03-23
- */
 @Data
-@ApiModel(value = "文档返回模型")
-public class DocVO implements Serializable {
+@ApiModel(value = "用户返回模型")
+public class UserVO implements Serializable {
 
-    private static final long serialVersionUID = 4059007030290933336L;
+    private static final long serialVersionUID = 6752595868688969506L;
 
     /**
      * 主键id
@@ -55,33 +46,17 @@ public class DocVO implements Serializable {
     private Integer deleted;
 
     /**
-     * 电子书id
+     * 登录名
      */
-    private Long ebookId;
+    private String loginName;
 
     /**
-     * 父id
-     */
-    private Long parent;
-
-    /**
-     * 名称
+     * 昵称
      */
     private String name;
 
     /**
-     * 顺序
+     * 密码
      */
-    private Integer sort;
-
-    /**
-     * 阅读数
-     */
-    private Integer viewCount;
-
-    /**
-     * 点赞数
-     */
-    private Integer voteCount;
-
+    private String password;
 }
