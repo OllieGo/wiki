@@ -76,7 +76,7 @@ export default defineComponent({
     const handleQueryContent = (id: number) => {
       axios.get("/doc/find-content/" + id).then((response) => {
         const data = response.data;
-        if (data.success) {
+        if (data.code == 1) {
           html.value = data.content;
         } else {
           message.error(data.message);

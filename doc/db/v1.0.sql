@@ -130,7 +130,6 @@ VALUES (6, 1, 5, '文档2.2.1', 1, 0, 0);
 
 -- 文档内容表
 drop table if exists `content`;
-
 CREATE TABLE `content`
 (
     `id`            bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -144,4 +143,23 @@ CREATE TABLE `content`
 
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文档内容表';
+
+
+-- 用户表
+drop table if exists `user`;
+CREATE TABLE `user`
+(
+    `id`            bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `create_people` varchar(45) DEFAULT NULL COMMENT '创建人',
+    `create_time`   datetime    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modify_people` varchar(45) DEFAULT NULL COMMENT '修改人',
+    `modify_time`   datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `deleted`       int(1) DEFAULT '0' COMMENT '是否删除 0正常 1删除',
+
+    `login_name`    varchar(50) NOT NULL COMMENT '登录名',
+    `user_name`     varchar(50) NOT NULL COMMENT '用户名',
+    `password`      varchar(32) NOT NULL COMMENT '密码',
+    PRIMARY KEY (`id`),
+    unique key `login_name_unique` (`login_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
