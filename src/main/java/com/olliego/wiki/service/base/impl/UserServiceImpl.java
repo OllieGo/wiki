@@ -34,4 +34,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         wrapper.eq(User::getId, id);
         remove(wrapper);
     }
+
+    @Override
+    public User queryByLoginName(String loginName) {
+        LambdaUpdateWrapper<User> wrapper = Wrappers.lambdaUpdate();
+        wrapper.eq(User::getDeleted, WikiConstants.ZERO);
+        wrapper.eq(User::getLoginName, loginName);
+        return getOne(wrapper);
+    }
 }
