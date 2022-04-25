@@ -16,4 +16,6 @@ public interface IUserService extends IService<User> {
     User queryById(Long id);
 
     void deleteById(Long id);
+
+    User queryByLoginName(String loginName);
 }

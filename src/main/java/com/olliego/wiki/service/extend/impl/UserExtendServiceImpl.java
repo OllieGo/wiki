@@ -22,6 +22,7 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserExtendServiceImpl implements UserExtendService {
@@ -55,13 +56,21 @@ public class UserExtendServiceImpl implements UserExtendService {
 
         if (ObjectUtils.isEmpty(param.getId())) {
             //新增
-            User user = CopyUtil.copy(param, User.class);
-            user.setId(snowFlake.nextId());
-            iUserService.save(user);
+            User sameLoginNameUser = iUserService.queryByLoginName(param.getLoginName());
+            if (Objects.nonNull(sameLoginNameUser)) {
+                return RestResult.wrapErrorResponse("登录名已存在！");
+
+            } else {
+                User user = CopyUtil.copy(param, User.class);
+                user.setId(snowFlake.nextId());
+                iUserService.save(user);
+            }
+
         } else {
             //更新
             User user = iUserService.queryById(param.getId());
             user.setName(param.getName());
+            user.setLoginName(null);
             iUserService.updateById(user);
         }
 
