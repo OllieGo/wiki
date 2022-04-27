@@ -17,6 +17,7 @@ import com.olliego.wiki.utils.SnowFlake;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
@@ -54,6 +55,7 @@ public class UserExtendServiceImpl implements UserExtendService {
     @Override
     public RestResult save(UserSaveParam param) {
 
+        param.setPassword(DigestUtils.md5DigestAsHex(param.getPassword().getBytes()));
         if (ObjectUtils.isEmpty(param.getId())) {
             //新增
             User sameLoginNameUser = iUserService.queryByLoginName(param.getLoginName());
