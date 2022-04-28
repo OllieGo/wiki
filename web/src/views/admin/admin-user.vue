@@ -92,7 +92,7 @@ import axios from 'axios';
 import {message} from 'ant-design-vue';
 import {Tool} from "@/util/tool";
 
-//declare let hexMd5: any;
+declare let hexMd5: any;
 declare let KEY: any;
 
 export default defineComponent({
@@ -175,7 +175,7 @@ export default defineComponent({
     const handleModalOk = () => {
       modalLoading.value = true;
 
-      //user.value.password = hexMd5(user.value.password + KEY);
+      user.value.password = hexMd5(user.value.password + KEY);
       console.log("user.value.password:", user.value.password);
       axios.post("/user/save", user.value).then((response) => {
         modalLoading.value = false;
@@ -231,12 +231,12 @@ export default defineComponent({
     const handleResetModalOk = () => {
       resetModalLoading.value = true;
 
-      //user.value.password = hexMd5(user.value.password + KEY);
+      user.value.password = hexMd5(user.value.password + KEY);
 
-      axios.post("/user/reset-password", user.value).then((response) => {
+      axios.post("/user/resetPassword", user.value).then((response) => {
         resetModalLoading.value = false;
         const data = response.data; // data = commonResp
-        if (data.success) {
+        if (data.code == 1) {
           resetModalVisible.value = false;
 
           // 重新加载列表

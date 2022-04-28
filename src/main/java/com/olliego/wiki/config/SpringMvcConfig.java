@@ -37,6 +37,6 @@
 //                .addPathPatterns(
 //                        "/*/save",
 //                        "/*/delete/**",
-//                        "/*/reset-password");
+//                        "/*/resetPassword");
 //    }
 //}

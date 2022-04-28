@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.config.WikiConstants;
 import com.olliego.wiki.model.User;
+import com.olliego.wiki.param.user.UserResetPasswordParam;
 import com.olliego.wiki.param.user.UserSaveParam;
 import com.olliego.wiki.param.user.UserSearchParam;
 import com.olliego.wiki.result.PageVO;
@@ -17,6 +18,7 @@ import com.olliego.wiki.utils.SnowFlake;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
@@ -54,6 +56,7 @@ public class UserExtendServiceImpl implements UserExtendService {
     @Override
     public RestResult save(UserSaveParam param) {
 
+        param.setPassword(DigestUtils.md5DigestAsHex(param.getPassword().getBytes()));
         if (ObjectUtils.isEmpty(param.getId())) {
             //新增
             User sameLoginNameUser = iUserService.queryByLoginName(param.getLoginName());
@@ -71,6 +74,7 @@ public class UserExtendServiceImpl implements UserExtendService {
             User user = iUserService.queryById(param.getId());
             user.setName(param.getName());
             user.setLoginName(null);
+            user.setPassword(null);
             iUserService.updateById(user);
         }
 
@@ -80,6 +84,13 @@ public class UserExtendServiceImpl implements UserExtendService {
     @Override
     public RestResult delete(Long id) {
         iUserService.deleteById(id);
+        return RestResult.wrapSuccessResponse();
+    }
+
+    @Override
+    public RestResult resetPassword(UserResetPasswordParam param) {
+        User user = CopyUtil.copy(param, User.class);
+        iUserService.updateById(user);
         return RestResult.wrapSuccessResponse();
     }
 }
