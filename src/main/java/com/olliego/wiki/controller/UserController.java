@@ -1,6 +1,7 @@
 package com.olliego.wiki.controller;
 
 
+import com.olliego.wiki.param.user.UserResetPasswordParam;
 import com.olliego.wiki.param.user.UserSaveParam;
 import com.olliego.wiki.param.user.UserSearchParam;
 import com.olliego.wiki.result.PageVO;
@@ -50,4 +51,9 @@ public class UserController {
         return userExtendService.delete(id);
     }
 
+    @ApiOperation(value = "新增/更新")
+    @PostMapping("/resetPassword")
+    public RestResult resetPassword(@Valid @RequestBody UserResetPasswordParam param) {
+        return userExtendService.resetPassword(param);
+    }
 }

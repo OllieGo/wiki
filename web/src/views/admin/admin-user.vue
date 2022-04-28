@@ -231,12 +231,12 @@ export default defineComponent({
     const handleResetModalOk = () => {
       resetModalLoading.value = true;
 
-      //user.value.password = hexMd5(user.value.password + KEY);
+      user.value.password = hexMd5(user.value.password + KEY);
 
-      axios.post("/user/reset-password", user.value).then((response) => {
+      axios.post("/user/resetPassword", user.value).then((response) => {
         resetModalLoading.value = false;
         const data = response.data; // data = commonResp
-        if (data.success) {
+        if (data.code == 1) {
           resetModalVisible.value = false;
 
           // 重新加载列表

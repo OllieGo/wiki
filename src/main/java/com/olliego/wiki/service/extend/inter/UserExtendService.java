@@ -1,5 +1,6 @@
 package com.olliego.wiki.service.extend.inter;
 
+import com.olliego.wiki.param.user.UserResetPasswordParam;
 import com.olliego.wiki.param.user.UserSaveParam;
 import com.olliego.wiki.param.user.UserSearchParam;
 import com.olliego.wiki.result.PageVO;
@@ -13,4 +14,6 @@ public interface UserExtendService {
     RestResult save(UserSaveParam param);
 
     RestResult delete(Long id);
+
+    RestResult resetPassword(UserResetPasswordParam param);
 }
