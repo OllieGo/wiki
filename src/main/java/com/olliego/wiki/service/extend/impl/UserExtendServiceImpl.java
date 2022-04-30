@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.config.WikiConstants;
 import com.olliego.wiki.model.User;
+import com.olliego.wiki.param.user.UserLoginParam;
 import com.olliego.wiki.param.user.UserResetPasswordParam;
 import com.olliego.wiki.param.user.UserSaveParam;
 import com.olliego.wiki.param.user.UserSearchParam;
@@ -61,7 +62,7 @@ public class UserExtendServiceImpl implements UserExtendService {
             //新增
             User sameLoginNameUser = iUserService.queryByLoginName(param.getLoginName());
             if (Objects.nonNull(sameLoginNameUser)) {
-                return RestResult.wrapErrorResponse("登录名已存在！");
+                return RestResult.wrapErrorResponse("用户名已存在！");
 
             } else {
                 User user = CopyUtil.copy(param, User.class);
@@ -92,5 +93,10 @@ public class UserExtendServiceImpl implements UserExtendService {
         User user = CopyUtil.copy(param, User.class);
         iUserService.updateById(user);
         return RestResult.wrapSuccessResponse();
+    }
+
+    @Override
+    public RestResult login(UserLoginParam param) {
+        return null;
     }
 }

@@ -156,7 +156,7 @@ CREATE TABLE `user`
     `modify_time`   datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     `deleted`       int(1) DEFAULT '0' COMMENT '是否删除 0正常 1删除',
 
-    `login_name`    varchar(50) NOT NULL COMMENT '登录名',
+    `login_name`    varchar(50) NOT NULL COMMENT '用户名',
     `name`          varchar(50) NOT NULL COMMENT '昵称',
     `password`      varchar(32) NOT NULL COMMENT '密码',
     PRIMARY KEY (`id`),
