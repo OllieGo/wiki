@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.config.WikiConstants;
+import com.olliego.wiki.exception.BusinessExceptionCode;
 import com.olliego.wiki.model.User;
 import com.olliego.wiki.param.user.UserLoginParam;
 import com.olliego.wiki.param.user.UserResetPasswordParam;
@@ -11,6 +12,7 @@ import com.olliego.wiki.param.user.UserSaveParam;
 import com.olliego.wiki.param.user.UserSearchParam;
 import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.result.RestResult;
+import com.olliego.wiki.result.UserLoginVO;
 import com.olliego.wiki.result.UserVO;
 import com.olliego.wiki.service.base.inter.IUserService;
 import com.olliego.wiki.service.extend.inter.UserExtendService;
@@ -97,6 +99,13 @@ public class UserExtendServiceImpl implements UserExtendService {
 
     @Override
     public RestResult login(UserLoginParam param) {
-        return null;
+        User dbUser = iUserService.queryByLoginName(param.getLoginName());
+        if (Objects.nonNull(dbUser)) {
+            if (dbUser.getPassword().equals(param.getPassword())) {
+                UserLoginVO userLoginVO = CopyUtil.copy(dbUser, UserLoginVO.class);
+                return RestResult.wrapSuccessResponse(userLoginVO);
+            }
+        }
+        return RestResult.wrapErrorResponse(BusinessExceptionCode.LOGIN_USER_ERROR.getDesc());
     }
 }
