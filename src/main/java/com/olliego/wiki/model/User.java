@@ -60,7 +60,7 @@ public class User implements Serializable {
     private Integer deleted;
 
     /**
-     * 登录名
+     * 用户名
      */
     @TableField("login_name")
     private String loginName;

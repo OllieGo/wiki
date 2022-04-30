@@ -16,23 +16,16 @@ import javax.validation.constraints.Pattern;
  * @Date: 2022/4/24 10:50
  */
 @Data
-@ApiModel(value = "用户保存模型")
-public class UserSaveParam extends RestParam {
+@ApiModel(value = "用户登录模型")
+public class UserLoginParam extends RestParam {
 
-    private static final long serialVersionUID = -7387559664833557065L;
-
-    private Long id;
+    private static final long serialVersionUID = -692408079831239621L;
 
     @NotBlank(message = "用户名不能为空")
     @ApiModelProperty(value = "用户名")
     private String loginName;
 
-    @NotBlank(message = "昵称不能为空")
-    @ApiModelProperty(value = "昵称")
-    private String name;
-
     @NotBlank(message = "密码不能为空")
-    @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$", message = "【密码】至少包含 数字和英文，长度6-32")
     @ApiModelProperty(value = "密码")
     private String password;
 

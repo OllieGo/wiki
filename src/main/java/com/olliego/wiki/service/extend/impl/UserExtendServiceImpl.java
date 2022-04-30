@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.olliego.wiki.config.WikiConstants;
+import com.olliego.wiki.exception.BusinessExceptionCode;
 import com.olliego.wiki.model.User;
+import com.olliego.wiki.param.user.UserLoginParam;
 import com.olliego.wiki.param.user.UserResetPasswordParam;
 import com.olliego.wiki.param.user.UserSaveParam;
 import com.olliego.wiki.param.user.UserSearchParam;
 import com.olliego.wiki.result.PageVO;
 import com.olliego.wiki.result.RestResult;
+import com.olliego.wiki.result.UserLoginVO;
 import com.olliego.wiki.result.UserVO;
 import com.olliego.wiki.service.base.inter.IUserService;
 import com.olliego.wiki.service.extend.inter.UserExtendService;
@@ -61,7 +64,7 @@ public class UserExtendServiceImpl implements UserExtendService {
             //新增
             User sameLoginNameUser = iUserService.queryByLoginName(param.getLoginName());
             if (Objects.nonNull(sameLoginNameUser)) {
-                return RestResult.wrapErrorResponse("登录名已存在！");
+                return RestResult.wrapErrorResponse("用户名已存在！");
 
             } else {
                 User user = CopyUtil.copy(param, User.class);
@@ -92,5 +95,17 @@ public class UserExtendServiceImpl implements UserExtendService {
         User user = CopyUtil.copy(param, User.class);
         iUserService.updateById(user);
         return RestResult.wrapSuccessResponse();
+    }
+
+    @Override
+    public RestResult login(UserLoginParam param) {
+        User dbUser = iUserService.queryByLoginName(param.getLoginName());
+        if (Objects.nonNull(dbUser)) {
+            if (dbUser.getPassword().equals(param.getPassword())) {
+                UserLoginVO userLoginVO = CopyUtil.copy(dbUser, UserLoginVO.class);
+                return RestResult.wrapSuccessResponse(userLoginVO);
+            }
+        }
+        return RestResult.wrapErrorResponse(BusinessExceptionCode.LOGIN_USER_ERROR.getDesc());
     }
 }

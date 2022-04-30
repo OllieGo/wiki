@@ -46,7 +46,7 @@ public class UserVO implements Serializable {
     private Integer deleted;
 
     /**
-     * 登录名
+     * 用户名
      */
     private String loginName;
 

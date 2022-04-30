@@ -20,7 +20,7 @@ public class UserSearchParam extends RestPageParam {
 
     private static final long serialVersionUID = -6430640135215042529L;
 
-    @ApiModelProperty(value = "登录名")
+    @ApiModelProperty(value = "用户名")
     private String loginName;
 
 }
