@@ -15,7 +15,8 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-    password: redis000
+    # password: 1234567
+    timeout: 10000
 
 
 # 配置mybatis所有Mapper.xml所在的路径
