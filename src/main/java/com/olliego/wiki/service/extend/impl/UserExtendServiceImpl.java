@@ -18,8 +18,10 @@ import com.olliego.wiki.service.base.inter.IUserService;
 import com.olliego.wiki.service.extend.inter.UserExtendService;
 import com.olliego.wiki.utils.CopyUtil;
 import com.olliego.wiki.utils.SnowFlake;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
@@ -28,7 +30,9 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class UserExtendServiceImpl implements UserExtendService {
 
@@ -36,6 +40,8 @@ public class UserExtendServiceImpl implements UserExtendService {
     private IUserService iUserService;
     @Resource
     private SnowFlake snowFlake;
+    @Resource
+    private RedisTemplate redisTemplate;
 
     @Override
     public RestResult<PageVO<UserVO>> queryPage(UserSearchParam param) {
@@ -92,6 +98,7 @@ public class UserExtendServiceImpl implements UserExtendService {
 
     @Override
     public RestResult resetPassword(UserResetPasswordParam param) {
+        param.setPassword(DigestUtils.md5DigestAsHex(param.getPassword().getBytes()));
         User user = CopyUtil.copy(param, User.class);
         iUserService.updateById(user);
         return RestResult.wrapSuccessResponse();
@@ -99,10 +106,18 @@ public class UserExtendServiceImpl implements UserExtendService {
 
     @Override
     public RestResult login(UserLoginParam param) {
+        param.setPassword(DigestUtils.md5DigestAsHex(param.getPassword().getBytes()));
         User dbUser = iUserService.queryByLoginName(param.getLoginName());
         if (Objects.nonNull(dbUser)) {
             if (dbUser.getPassword().equals(param.getPassword())) {
                 UserLoginVO userLoginVO = CopyUtil.copy(dbUser, UserLoginVO.class);
+
+                //生成单点登录token，并放入redis中
+                Long token = snowFlake.nextId();
+                log.info("token:{}", token);
+                redisTemplate.opsForValue().set(token, userLoginVO, 3600 * 24, TimeUnit.SECONDS);
+                userLoginVO.setToken(token.toString());
+
                 return RestResult.wrapSuccessResponse(userLoginVO);
             }
         }

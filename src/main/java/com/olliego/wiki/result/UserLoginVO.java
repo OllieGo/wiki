@@ -27,4 +27,6 @@ public class UserLoginVO extends RestParam {
 
     private String name;
 
+    private String token;
+
 }

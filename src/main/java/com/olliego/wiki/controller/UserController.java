@@ -11,6 +11,7 @@ import com.olliego.wiki.result.UserVO;
 import com.olliego.wiki.service.extend.inter.UserExtendService;
 import com.olliego.wiki.utils.SnowFlake;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,9 +31,6 @@ public class UserController {
 
     @Resource
     private UserExtendService userExtendService;
-
-    @Resource
-    private SnowFlake snowFlake;
 
     @ApiOperation(value = "用户分页列表")
     @PostMapping("/page")

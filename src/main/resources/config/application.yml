@@ -12,6 +12,12 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    # password: 1234567
+    timeout: 10000
+
 
 # 配置mybatis所有Mapper.xml所在的路径
 mybatis:
@@ -24,3 +30,4 @@ mybatis-plus:
     db-config:
       logic-delete-value: 1
       logic-not-delete-value: 0
+
