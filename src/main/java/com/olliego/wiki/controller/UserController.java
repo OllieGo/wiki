@@ -31,6 +31,8 @@ public class UserController {
 
     @Resource
     private UserExtendService userExtendService;
+    @Resource
+    private RedisTemplate redisTemplate;
 
     @ApiOperation(value = "用户分页列表")
     @PostMapping("/page")
@@ -60,5 +62,12 @@ public class UserController {
     @PostMapping("/login")
     public RestResult login(@Valid @RequestBody UserLoginParam param) {
         return userExtendService.login(param);
+    }
+
+    @ApiOperation(value = "退出登录")
+    @GetMapping("/logout/{token}")
+    public RestResult logout(@PathVariable String token) {
+        redisTemplate.delete(token);
+        return RestResult.wrapSuccessResponse();
     }
 }
