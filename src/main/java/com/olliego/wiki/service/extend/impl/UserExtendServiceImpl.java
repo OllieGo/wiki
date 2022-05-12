@@ -1,5 +1,6 @@
 package com.olliego.wiki.service.extend.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -115,7 +116,7 @@ public class UserExtendServiceImpl implements UserExtendService {
                 //生成单点登录token，并放入redis中
                 Long token = snowFlake.nextId();
                 log.info("token:{}", token);
-                redisTemplate.opsForValue().set(token, userLoginVO, 3600 * 24, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(token.toString(), JSONObject.toJSONString(userLoginVO), 3600 * 24, TimeUnit.SECONDS);
                 userLoginVO.setToken(token.toString());
 
                 return RestResult.wrapSuccessResponse(userLoginVO);
